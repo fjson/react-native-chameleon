@@ -24,29 +24,22 @@ class Select extends Component {
             selectedValue: this.props.selectedValue,
             preSelectedValue: this.props.selectedValue,
             index: 0,
+            preIndex: 0,
         };
-    }
-
-    static getDerivedStateFromProps({selectedValue}, preState) {
-        if (selectedValue !== preState.preSelectedValue) {
-            return {
-                selectedValue,
-                preSelectedValue: selectedValue,
-            }
-        }
-        return null;
     }
 
     valueChanged = () => {
         let {onValueChanged, dataSource} = this.props;
         //如果未滑动 picker,点击确定默认设置第一项为选中项
         this.setState({
-            selectedValue: dataSource[this.state.index],
+            index:this.state.preIndex,
+            selectedValue: dataSource[this.state.preIndex],
         }, () => {
             onValueChanged && onValueChanged(this.state.selectedValue, this.state.index);
             this.modal.hide();
         });
     };
+
     valueChangedForAndroid = (value, index) => {
         if (value === '请选择') {
             return;
@@ -99,11 +92,11 @@ class Select extends Component {
                                     <RowLine height={1}/>
                                 </View>
                                 <Picker
-                                    selectedValue={dataSource[this.state.index]}
+                                    selectedValue={dataSource[this.state.preIndex]}
                                     style={{width: '100%', height: 216}}
                                     onValueChange={(value, index) => this.setState({
-                                        selectedValue: value,
-                                        index: index
+                                        preSelectedValue: value,
+                                        preIndex: index
                                     }, () => {
                                         //每次选择内容发生变化时调用
                                         let {pickerValueChanged} = this.props;
