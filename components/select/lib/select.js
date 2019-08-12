@@ -22,7 +22,6 @@ class Select extends Component {
         super(props);
         this.state = {
             selectedValue: this.props.selectedValue,
-            preSelectedValue: this.props.selectedValue,
             index: 0,
             preIndex: 0,
         };
@@ -95,7 +94,6 @@ class Select extends Component {
                                     selectedValue={dataSource[this.state.preIndex]}
                                     style={{width: '100%', height: 216}}
                                     onValueChange={(value, index) => this.setState({
-                                        preSelectedValue: value,
                                         preIndex: index
                                     }, () => {
                                         //每次选择内容发生变化时调用
