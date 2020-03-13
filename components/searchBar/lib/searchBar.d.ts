@@ -17,3 +17,5 @@ export interface SearchBarProps {
 }
 
 declare const SearchBar:FC<SearchBarProps>;
+
+export default SearchBar;
