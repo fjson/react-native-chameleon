@@ -2,16 +2,16 @@ import { FC } from 'react';
 import { ViewStyle, ImageSourcePropType, ImageStyle } from 'react-native';
 
 export interface SearchBarProps {
-    searchContent: string;
-    containerStyle: ViewStyle;
-    searchIcon: ImageSourcePropType;
-    searchIconStyle: ImageStyle;
-    clearIcon: ImageSourcePropType;
-    clearIconStyle: ImageStyle;
-    textInputStyle: StyleProp<TextStyle>;
-    placeholder: string;
-    placeholderTextColor: string;
-    autoFocus: boolean;
+    searchContent?: string;
+    containerStyle?: ViewStyle;
+    searchIcon?: ImageSourcePropType;
+    searchIconStyle?: ImageStyle;
+    clearIcon?: ImageSourcePropType;
+    clearIconStyle?: ImageStyle;
+    textInputStyle?: StyleProp<TextStyle>;
+    placeholder?: string;
+    placeholderTextColor?: string;
+    autoFocus?: boolean;
     onValueChanged?(val:string):void;
     clearHandler?():void;
 }
