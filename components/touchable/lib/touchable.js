@@ -30,11 +30,11 @@ export class Touchable extends Component {
 
     callOnceInInterval = {
         lastPressTime: 1,
-        onPress: () => {
+        onPress: (params) => {
             const curTime = new Date().getTime();
             if (curTime - this.callOnceInInterval.lastPressTime > 1000) {
                 this.callOnceInInterval.lastPressTime = curTime;
-                this.props.onPress && this.props.onPress();
+                this.props.onPress && this.props.onPress(params);
             }
         },
     };
@@ -61,7 +61,7 @@ export class Touchable extends Component {
         }
 
         return (
-            <Component {...props} onPress={() => this.callOnceInInterval.onPress()}>
+            <Component {...props} onPress={(params) => this.callOnceInInterval.onPress(params)}>
                 {children}
             </Component>
         );
