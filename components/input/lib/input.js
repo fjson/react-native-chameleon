@@ -27,12 +27,13 @@ const Input = React.forwardRef((props, ref) => (
 ));
 
 class JFInput extends Component {
-    render(){
+    render() {
         let {onChange, inputRef, ...props} = this.props;
-        return(
+        return (
             <TextInput
                 ref={inputRef}
                 underlineColorAndroid={'transparent'}
+                maxLength={200}
                 onChangeText={onChange}
                 {...props}
             />
@@ -44,7 +45,7 @@ JFInput.propTypes = {
     /**
      * 输入框文本变化时的回调
      */
-    onChange:Proptypes.any,
+    onChange: Proptypes.any,
 };
 
 export default Input;
