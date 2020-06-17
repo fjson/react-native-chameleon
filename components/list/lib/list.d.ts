@@ -15,7 +15,7 @@ interface ListProps{
     leftComponent?: React.ReactNode,
     rightComponent?: React.ReactNode,
     showLine?: boolean,
-    lineProps?: RowLineProps,
+    lineProps?:RowLineProps,
     hideRightComponent?: boolean
 }
 export declare const List: FC<ListProps>;
