@@ -179,6 +179,15 @@ class ProgressDemo extends PureComponent {
                               thickness={10} onEnd={this.loadCallBack} showsText={true}
                     />
                 </DemoList>
+                <DemoList containStyle={{alignItems: 'center'}}
+                          title={`半圆形进度条(半径固定为宽度的一半),加载完成回调 \nshowsText={true} \nonEnd={this.loadCallBack}`}>
+                            <Progress type={'widthHalfCircle'} progress={this.state.progress}
+                                      width={200} height={110} color={'white'} unfilledColor={'rgb(0,0,0,0)'}
+                                      strokeCap={'round'}
+                                      offsetRotate={180}
+                                      thickness={20}
+                            />
+                </DemoList>
             </ScrollView>
         );
     }
