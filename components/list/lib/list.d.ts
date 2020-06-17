@@ -10,7 +10,7 @@ interface ListProps{
     rightText?: string,
     rightTextStyle?: TextStyle,
     containerStyle?: TextStyle,
-    onPress?():void,
+    onPress?(): void,
     disable?: boolean,
     leftComponent?: React.ReactNode,
     rightComponent?: React.ReactNode,
