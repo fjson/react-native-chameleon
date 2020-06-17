@@ -18,5 +18,5 @@ interface ListProps{
     lineProps?: RowLineProps,
     hideRightComponent?: boolean
 }
-declare const List: FC<ListProps>;
-export default List;
+export declare const List: FC<ListProps>;
+
