@@ -1,6 +1,6 @@
 {
   "name": "@xzchameleon/columnline",
-  "version": "0.0.34",
+  "version": "0.0.54",
   "description": "> TODO: description",
   "author": "jason.xing@thizgroup.com <jason.xing@thizgroup.com>",
   "homepage": "https://github.com/fjson/react-native-chameleon#readme",
@@ -26,5 +26,5 @@
   "bugs": {
     "url": "https://github.com/fjson/react-native-chameleon/issues"
   },
-  "gitHead": "7d88e37cd59320953ee4e0d926e0cf79cb9b83e9"
+  "gitHead": "24a26b9b23986c28a2f85882225f63cbf923a5e9"
 }

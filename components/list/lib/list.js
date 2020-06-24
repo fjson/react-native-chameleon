@@ -1,9 +1,9 @@
 import React from 'react';
-import {Text, View, StyleSheet} from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import PropTypes from 'prop-types';
-import {Touchable, TOUCHABLE_TYPES} from "@xzchameleon/touchable";
-import {Icon} from '@xzchameleon/icon';
-import {RowLine} from "@xzchameleon/rowline";
+import { Touchable, TOUCHABLE_TYPES } from "@xzchameleon/touchable";
+import { Icon } from '@xzchameleon/icon';
+import { RowLine } from "@xzchameleon/rowline";
 
 
 /**
@@ -16,9 +16,9 @@ import {RowLine} from "@xzchameleon/rowline";
  * 底部有一条灰色的线
  * paddingHorizontal:15
  */
-export function List({leftIcon, leftText, leftTextStyle, rightIcon, rightText, rightTextStyle, containerStyle, onPress, disable, leftComponent, rightComponent, showLine, lineProps}) {
+export function List({ leftIcon, leftText, leftTextStyle, rightIcon, rightText, rightTextStyle, containerStyle, onPress, disable, leftComponent, rightComponent, showLine, lineProps, hideRightComponent }) {
     return (
-        <Touchable touchComponent={TOUCHABLE_TYPES.WITHOUT_FEEDBACK} onPress={() => {
+        <Touchable touchComponent={onPress ? TOUCHABLE_TYPES.HIGHLIGHT : TOUCHABLE_TYPES.WITHOUT_FEEDBACK} onPress={() => {
             (onPress && !disable) && onPress()
         }}>
             <View style={[ListStyle.container, containerStyle]}>
@@ -27,22 +27,29 @@ export function List({leftIcon, leftText, leftTextStyle, rightIcon, rightText, r
                         leftComponent || <View style={ListStyle.leftView}>
                             {
                                 leftIcon && (!React.isValidElement(leftIcon) ?
-                                    <Icon style={{marginRight:8}} {...leftIcon}/> :
+                                    <Icon style={{ marginRight: 8 }} {...leftIcon} /> :
                                     leftIcon)
                             }
                             <Text style={[ListStyle.leftText, leftTextStyle]}>{leftText}</Text>
                         </View>
                     }
                     {
-                        rightComponent || <View style={ListStyle.leftView}>
-                            <Text style={[ListStyle.rightText, rightTextStyle]}>{rightText}</Text>
-                            {
-                                rightIcon && (!React.isValidElement(rightIcon) ?
-                                    <Icon type={'AntDesign'} name={'right'} size={16} style={{marginLeft:8}} {...rightIcon}/> :
-                                    rightIcon)
-                            }
-                        </View>
+                        !hideRightComponent
+                        &&
+                        (
+                            rightComponent || (React.isValidElement(rightIcon) && rightIcon) || (
+                                <View style={ListStyle.rightView}>
+                                    { rightText && <Text style={[ListStyle.rightText, rightTextStyle]}>{rightText}</Text> }
+                                    {
+                                        onPress !== undefined && ((!React.isValidElement(rightIcon) ?
+                                            <Icon type={'AntDesign'} name={'right'} size={16} style={{ marginLeft: 8 }} color={'#999999'} {...rightIcon} /> :
+                                            rightIcon))
+                                    }
+                                </View>
+                            )
+                        )
                     }
+
                 </View>
                 {
                     showLine && <RowLine left={15} {...lineProps} />
@@ -66,6 +73,7 @@ const ListStyle = StyleSheet.create({
         paddingVertical: 8
     },
     leftView: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -84,8 +92,10 @@ const ListStyle = StyleSheet.create({
 });
 List.defaultProps = {
     disable: false,
-    showLine:true
+    showLine: true,
+    hideRightComponent: false
 };
+
 
 List.propTypes = {
     /**
@@ -139,7 +149,11 @@ List.propTypes = {
     /**
      * 底边线props
      */
-    lineProps: PropTypes.object
+    lineProps: PropTypes.object,
+    /**
+     * 是否隐藏右侧的icon
+     */
+    hideRightComponent: PropTypes.bool
 };
 
 

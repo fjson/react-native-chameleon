@@ -17,25 +17,25 @@ import {Icon} from "@xzchameleon/icon";
 const IS_IOS = Platform.OS === 'ios';
 
 class Select extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
             selectedValue: this.props.selectedValue,
-            preSelectedValue: this.props.selectedValue,
             index: 0,
+            preValue: ''
         };
     }
 
-    static getDerivedStateFromProps({selectedValue}, preState) {
-        if (selectedValue !== preState.preSelectedValue) {
+    static getDerivedStateFromProps({selectedValue}, state) {
+        if (selectedValue !== state.preValue) {
             return {
                 selectedValue,
-                preChecked: selectedValue,
+                preValue:selectedValue
             }
         }
         return null;
     }
+
     valueChanged = () => {
         let {onValueChanged, dataSource} = this.props;
         //如果未滑动 picker,点击确定默认设置第一项为选中项
@@ -47,7 +47,8 @@ class Select extends Component {
         });
     };
     valueChangedForAndroid = (value, index) => {
-        if (value === '请选择') {
+        let { selectText } = this.props;
+        if (value === selectText) {
             return;
         }
         let {onValueChanged} = this.props;
@@ -60,16 +61,11 @@ class Select extends Component {
     };
     //点击取消的回调
     cancelPicker = () => {
-        this.modal.hide(() => {
-            this.setState({
-                selectedValue: this.props.selectedValue,
-                index: 0,
-            });
-        });
+        this.modal.hide();
     };
 
     render() {
-        let {dataSource, style, textStyle, imgStyle, headerLeftText, headerCenterText, headerRightText, leftTextStyle, centerTextStyle, rightTextStyle, enabled, mode, itemStyle, prompt} = this.props;
+        let {dataSource, style, textStyle, imgStyle, headerLeftText, headerCenterText, headerRightText, leftTextStyle, centerTextStyle, rightTextStyle, enabled, mode, itemStyle, prompt, selectText} = this.props;
         return (
             IS_IOS ?
                 <Touchable touchComponent={TOUCHABLE_TYPES.OPACITY} onPress={() => enabled ? this.modal.show() : null}>
@@ -83,7 +79,7 @@ class Select extends Component {
                                         <View style={SelectStyle.left}>
                                             <Touchable touchComponent={TOUCHABLE_TYPES.WITHOUT_FEEDBACK}
                                                        onPress={this.cancelPicker}>
-                                                <View>
+                                                <View style={{ paddingHorizontal:5, paddingVertical:5 }}>
                                                     <Text style={[SelectStyle.leftText, leftTextStyle]}>{headerLeftText}</Text>
                                                 </View>
                                             </Touchable>
@@ -94,7 +90,7 @@ class Select extends Component {
                                         <View style={SelectStyle.right}>
                                             <Touchable touchComponent={TOUCHABLE_TYPES.WITHOUT_FEEDBACK}
                                                        onPress={this.valueChanged}>
-                                                <View>
+                                                <View style={{ paddingHorizontal:5, paddingVertical:5 }}>
                                                     <Text style={[SelectStyle.rightText, rightTextStyle]}>{headerRightText}</Text>
                                                 </View>
                                             </Touchable>
@@ -137,7 +133,7 @@ class Select extends Component {
                     prompt={prompt}
                 >
                     {
-                        ['请选择',...dataSource].map((value, index) => {
+                        [selectText,...dataSource].map((value, index) => {
                             return (
                                 <Picker.Item label={value} value={value} key={index + ''}/>
                             )
@@ -214,6 +210,7 @@ const SelectStyle = StyleSheet.create({
 
 Select.defaultProps = {
     selectedValue: '请选择',
+    selectText: '请选择',
     enabled:true,
     mode:'dialog',
 };
@@ -285,6 +282,10 @@ Select.propTypes = {
      * 【Android】设置选择器的提示字符串。在Android的对话框模式中用作对话框的标题
      */
     prompt:Proptypes.string,
+    /**
+     * 【Android】数据源首项数据，默认"请选择"，主要为了多语言显示
+     */
+    selectText:Proptypes.string,
 };
 
 export default Select;

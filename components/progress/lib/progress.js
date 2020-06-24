@@ -261,6 +261,46 @@ export class Progress extends PureComponent {
                         </View>
                     </View>
                 }
+                {
+                    type === 'widthHalfCircle' && this.state.show &&
+                    <View style={{height, width}}>
+                        <ART.Surface
+                            width={width}
+                            height={height}
+                        >
+                            <Arc
+                                radius={width*0.5}
+                                startAngle={Math.PI + Math.PI * offsetRotate / 360}
+                                endAngle={Math.PI * 3 - Math.PI * offsetRotate / 360}
+                                stroke={unfilledColor}
+                                strokeCap={strokeCap}
+                                strokeWidth={thickness}
+                            />
+                            {
+                                this.props.progress > 0 && <AnimatedArc
+                                    radius={width*0.5}
+                                    startAngle={halfAngle}
+                                    endAngle={Math.PI * 3 - Math.PI * offsetRotate / 360}
+                                    direction={direction}
+                                    stroke={color}
+                                    strokeCap={strokeCap}
+                                    strokeWidth={thickness}
+                                />
+                            }
+                        </ART.Surface>
+                        <View
+                            style={[{
+                                width: '100%',
+                                height: '100%',
+                                position: 'absolute',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }, childStyle]}
+                        >
+                            {children}
+                        </View>
+                    </View>
+                }
             </View>)
     }
 }
